@@ -53,19 +53,22 @@ class Client:
 		return json.loads(msg)
 
 	def control_motor(self, lvalue, rvalue):
-		if(lvalue == 0):
-			lvalue = 1
-		else:
-			lvalue = lvalue*15
-		
-		if(rvalue == 0):
-			rvalue = 1
-		else:
-			rvalue = rvalue*15
-		
-		self.send('{ "Control" : { "Motor Left" : '+str(lvalue)+', "Motor Right" : '+str(rvalue)+' }}')
+                if (lvalue == 0 and rvalue == 0):
+                        self.send('{ "Control" : { "Stop" : "Click" } }')
+                else:
+                        if(lvalue == 0):
+                                lvalue = 1
+                        else:
+                                lvalue = lvalue*15
+                        
+                        if(rvalue == 0):
+                                rvalue = 1
+                        else:
+                                rvalue = rvalue*15
+                        
+                        self.send('{ "Control" : { "Motor Left" : '+str(lvalue)+', "Motor Right" : '+str(rvalue)+' }}')
 
 	def send(self, message):
-		print(message)
+		#print(message)
 		self.sock.sendall(message)
 
